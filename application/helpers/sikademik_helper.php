@@ -1,0 +1,80 @@
+<?php
+
+function is_unique($table, $id, $field, $form, $where = 'id')
+{
+    $ci             = get_instance();
+    $original_value = $ci->db->query("SELECT ${field} FROM ${table} WHERE ${where} = " . $id)->row()->$field;
+    if ($form != $original_value) {
+        $is_unique = "|is_unique[${table}.${field}]";
+    } else {
+        $is_unique = "";
+    }
+    return $is_unique;
+}
+
+function is_logged_in()
+{
+    $ci = get_instance();
+    if (!$ci->session->userdata('email')) {
+        redirect('auth');
+    } else {
+        $role_id = $ci->session->userdata('role_id');
+        $path    = $ci->uri->segment(1);
+
+        if ($role_id == 3) {
+            $menu = $ci->db->get_where('user_sub_menu', [
+                'url'     => $path,
+                'menu_id' => 4,
+            ])->row_array();
+        } elseif ($role_id == 2) {
+            $menu = $ci->db->get_where('user_sub_menu', [
+                'url'     => $path,
+                'menu_id' => 2,
+            ])->row_array();
+        } else {
+            $menu = $ci->db->get_where('user_sub_menu', ['url' => $path])->row_array();
+        }
+        $userAccess = $ci->db->get_where('user_access_menu', [
+            'role_id' => $role_id,
+            'menu_id' => $menu['menu_id'],
+        ]);
+
+        if ($userAccess->num_rows() < 1) {
+            redirect('auth/blocked');
+        }
+    }
+}
+
+function check_access($role_id, $menu_id)
+{
+    $ci = get_instance();
+
+    $ci->db->where('role_id', $role_id);
+    $ci->db->where('menu_id', $menu_id);
+    $result = $ci->db->get('user_access_menu');
+
+    if ($result->num_rows() > 0) {
+        return "checked='checked'";
+    }
+}
+
+function count_jadwal_kelas($id_kelas)
+{
+    $ci = get_instance();
+    $ci->load->model('Jadwal_model', 'jadwal');
+    return $ci->jadwal->countJadwalKelas($id_kelas)->num_rows();
+}
+
+function count_jumlah_mapel($id_kelas)
+{
+    $ci = get_instance();
+    $ci->load->model('Mapel_model', 'mapel');
+    return $ci->mapel->countMapelKelas($id_kelas)->num_rows();
+}
+
+function count_jadwal_kelas_guru($id_kelas, $nip)
+{
+    $ci = get_instance();
+    $ci->load->model('Jadwal_guru_model', 'jadwal_guru');
+    return $ci->jadwal_guru->countJadwalKelasGuru($id_kelas, $nip)->num_rows();
+}
