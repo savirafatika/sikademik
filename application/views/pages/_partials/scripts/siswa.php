@@ -7,61 +7,18 @@ $(document).ready(function() {
     }]
   });
 
-  // show_siswa(); //call function show all product
-
-  //function show all product
-  function show_siswa() {
-    $.ajax({
-      type: 'ajax',
-      url: '<?=base_url('siswa/getSiswa');?>',
-      async: true,
-      dataType: 'json',
-      success: function(data) {
-        var html = '';
-        var i;
-        var no = 1;
-        for (i = 0; i < data.length; i++) {
-          html += '<tr>' +
-            '<td>' + no++ + '</td>' +
-            '<td>' + data[i].NIS + '</td>' +
-            '<td>' + data[i].nama + '</td>' +
-            '<td>' + data[i].tempat_lahir + '</td>' +
-            '<td>' + data[i].tanggal_lahir + '</td>' +
-            '<td>' + data[i].jenis_kelamin + '</td>' +
-            '<td>' + data[i].agama + '</td>' +
-            '<td>' + data[i].nama_ayah + '</td>' +
-            '<td>' + data[i].nama_ibu + '</td>' +
-            '<td>' + data[i].pekerjaan_ayah + '</td>' +
-            '<td>' + data[i].pekerjaan_ibu + '</td>' +
-            '<td>' + data[i].alamat + '</td>' +
-            '<td>' +
-            '<a href="javascript:void(0);" class="badge badge-success item_edit_siswa" data-id-siswa="' +
-            data[
-              i].NIS + '" data-nama="' + data[i].nama + '" data-tempat_lahir="' + data[
-              i].tempat_lahir + '" data-tanggal_lahir="' + data[
-              i].tanggal_lahir + '" data-jenis-kelamin="' + data[i].jenis_kelamin + '" data-nama_ayah="' +
-            data[
-              i].nama_ayah + '" data-nama_ibu="' + data[
-              i].nama_ibu + '" data-pekerjaan_ayah="' + data[
-              i].pekerjaan_ayah + '" data-pekerjaan_ibu="' + data[
-              i].pekerjaan_ibu + '" data-agama="' + data[
-              i].agama + '" data-alamat="' + data[i].alamat + '"><i class="fas fa-edit"></i> Edit</a>' +
-            ' ' +
-            '<a href="javascript:void(0);" class="badge badge-danger item_delete_siswa" data-nama="' + data[
-              i].nama + '" data-id-siswa="' +
-            data[i].NIS + '"><i class="fas fa-trash"></i> Delete</a>' +
-            '</td>' +
-            '</tr>';
-        }
-        $('#show_data').html(html);
-      }
-
-    });
-  }
+  // btn lihat kelas
+  $('#show_data').on('click', '.item_lihat_siswa', function(e) {
+    e.preventDefault()
+    var id = $(this).data('id-kelas');
+    let url = `<?=base_url('siswa/data_siswa/');?>${id}`;
+    window.location.replace(url);
+  })
 
   //btn simpan siswa
   $('#btnSimpanSiswa').on('click', function(e) {
     e.preventDefault();
+    var id = "<?=$this->uri->segment(3);?>"
     var isEdit = $('input[name="id_siswa"]').val();
     var nis = $('input[name="nis"]').val();
     var nama = $('input[name="nama"]').val();
@@ -87,6 +44,7 @@ $(document).ready(function() {
       url: action,
       dataType: "JSON",
       data: {
+        kelas_id: id,
         nis: nis,
         id_siswa: isEdit,
         nama: nama,
@@ -115,7 +73,7 @@ $(document).ready(function() {
           $('textarea#alamat').val("");
           $('#modalSiswa').modal('hide');
           swal('Berhasil', `Siswa berhasil ${message}`, 'success');
-          show_siswa();
+          window.location.reload()
         } else {
           alert(data.error);
         }
@@ -139,7 +97,7 @@ $(document).ready(function() {
           $('[name="id_siswa_delete"]').val("");
           $('#modalHapusSiswa').modal('hide');
           swal('Berhasil', 'Siswa berhasil dihapus!', 'success');
-          show_siswa();
+          window.location.reload()
         } else {
           alert(data.error);
         }

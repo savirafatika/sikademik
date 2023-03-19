@@ -9,7 +9,7 @@ $this->load->view('pages/_partials/header');
       <h1>Siswa</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="<?=base_url('dashboard');?>">Dashboard</a></div>
-        <div class="breadcrumb-item"><a href="">Siswa</a></div>
+        <div class="breadcrumb-item"><a href="<?=base_url('siswa');?>">Siswa</a></div>
         <div class="breadcrumb-item">List</div>
       </div>
     </div>
@@ -19,7 +19,9 @@ $this->load->view('pages/_partials/header');
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4>Daftar Siswa</h4>
+              <h4>Daftar Siswa Kelas: <code><?=$kelas['nama_kelas'];?></code></h4>
+              <a href="<?=base_url('siswa');?>" class="btn btn-round btn-secondary"><i class="fas fa-arrow-left"></i>
+                Kembali</a>
             </div>
             <div class="card-body">
               <a href="javascript:void(0);" class="btn btn-primary mb-3" id="newSiswaModal">Tambah Siswa</a>
@@ -60,8 +62,7 @@ $this->load->view('pages/_partials/header');
                       <td><?=$sw['alamat'];?></td>
                       <td>
                         <a data-id-siswa="<?=$sw['NIS'];?>" data-nama="<?=$sw['nama'];?>"
-                          data-tempat_lahir="<?=$sw['tempat_lahir'];?>"
-                          data-tanggal_lahir="<?=$sw['tanggal_lahir'];?>"
+                          data-tempat_lahir="<?=$sw['tempat_lahir'];?>" data-tanggal_lahir="<?=$sw['tanggal_lahir'];?>"
                           data-jenis-kelamin="<?=$sw['jenis_kelamin'];?>" data-agama="<?=$sw['agama'];?>"
                           data-nama_ayah="<?=$sw['nama_ayah'];?>" data-nama_ibu="<?=$sw['nama_ibu'];?>"
                           data-pekerjaan_ayah="<?=$sw['pekerjaan_ayah'];?>"

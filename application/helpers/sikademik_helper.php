@@ -78,3 +78,10 @@ function count_jadwal_kelas_guru($id_kelas, $nip)
     $ci->load->model('Jadwal_guru_model', 'jadwal_guru');
     return $ci->jadwal_guru->countJadwalKelasGuru($id_kelas, $nip)->num_rows();
 }
+
+function count_siswa_kelas($id_kelas)
+{
+    $ci = get_instance();
+    $ci->load->model('Jadwal_guru_model', 'siswa');
+    return $ci->siswa->countSiswaKelas($id_kelas)->num_rows();
+}

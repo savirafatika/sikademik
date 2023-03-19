@@ -7,6 +7,7 @@ class Siswa extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Siswa_model', 'siswa');
+        $this->load->model('Jadwal_model', 'jadwal');
         is_logged_in();
     }
 
@@ -16,13 +17,27 @@ class Siswa extends CI_Controller
         $email         = $this->session->userdata('email');
         $data['user']  = $this->db->get_where('user', ['email' => $email])->row_array();
 
-        $data['siswa'] = $this->siswa->getSiswa()->result_array();
+        $data['daftar_kelas'] = $this->jadwal->getAllKelas()->result_array();
+
+        $this->load->view('pages/siswa/list-kelas', $data);
+    }
+
+    public function data_siswa($idKelas = null)
+    {
+        if (!$idKelas) {
+            redirect('jadwal');
+        }
+        $data['title'] = 'Data Siswa';
+        $email         = $this->session->userdata('email');
+        $data['user']  = $this->db->get_where('user', ['email' => $email])->row_array();
+        $data['kelas'] = $this->jadwal->getKelasByID($idKelas)->row_array();
+        $data['siswa'] = $this->siswa->getSiswa($idKelas)->result_array();
         $this->load->view('pages/siswa/index', $data);
     }
 
-    public function getSiswa()
+    public function getSiswa($idKelas = null)
     {
-        $data = $this->siswa->getSiswa()->result();
+        $data = $this->siswa->getSiswa($idKelas)->result();
         echo json_encode($data);
     }
 
@@ -58,6 +73,12 @@ class Siswa extends CI_Controller
                 'jenis_kelamin'  => $this->input->post('jenis_kelamin'),
             ];
             $this->db->insert('siswa', $data);
+
+            // tambahkan siswa ke tbl kelas_murid
+            $this->db->insert('kelas_murid', [
+                'nis'      => $this->input->post('nis'),
+                'kelas_id' => $this->input->post('kelas_id'),
+            ]);
 
             // tambahkan siswa ke user tabel
             $nama  = $this->input->post('nama');
