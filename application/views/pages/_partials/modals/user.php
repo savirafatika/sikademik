@@ -17,9 +17,7 @@
           <div class="form-group">
             <select name="role_id" id="role_id" class="form-control">
               <option value="" disabled selected>Pilih Role</option>
-              <?php foreach ($role as $r) : ?>
-              <option value="<?= $r['id']; ?>"><?= $r['role']; ?></option>
-              <?php endforeach; ?>
+              <option value="1">Staff TU</option>
             </select>
           </div>
           <div class="form-group">
