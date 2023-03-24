@@ -71,4 +71,47 @@ class Nilai_model extends CI_Model
         ns.kelas_id ='" . $param['kelas'] . "' AND ns.tahun_id ='" . $param['tahun'] . "' AND ns.semester ='" . $param['semester'] . "' ORDER BY s.nama ASC, mp.grup ASC";
         return $this->db->query($query);
     }
+
+    public function checkNilai($param)
+    {
+        $check = $this->db->get_where('nilai_siswa', [
+            'mapel_id' => $param['mapel'],
+            'siswa_id' => $param['siswa'],
+            'kelas_id' => $param['kelas'],
+            'tahun_id' => $param['tahun'],
+            'semester' => $param['semester'],
+        ])->num_rows();
+        return $check;
+    }
+
+    public function getNilai($param)
+    {
+        $query = "SELECT
+        nilai_pengetahuan,
+        nilai_keterampilan
+      FROM
+        nilai_siswa
+      WHERE
+        siswa_id ='" . $param['siswa'] . "' AND
+        kelas_id ='" . $param['kelas'] . "' AND tahun_id ='" . $param['tahun'] . "' AND semester ='" . $param['semester'] . "'";
+        return $this->db->query($query);
+    }
+
+    public function trigger_ranking($data)
+    {
+        $check = $this->db->get_where('ranking_siswa', [
+            'kelas_id' => $data['kelas'],
+            'nis'      => $data['nis'],
+        ])->num_rows();
+
+        if ($check < 1) {
+            $query = $this->db->insert('ranking_siswa', $data);
+        } else {
+            $this->db->set('jumlah_nilai', $data['jumlah_nilai']);
+            $this->db->where('kelas_id', $data['kelas']);
+            $this->db->where('nis', $data['nis']);
+            $query = $this->db->update('ranking_siswa');
+        }
+        return $query;
+    }
 }

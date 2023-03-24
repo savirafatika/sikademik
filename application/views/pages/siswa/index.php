@@ -9,7 +9,7 @@ $this->load->view('pages/_partials/header');
       <h1>Siswa</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="<?=base_url('dashboard');?>">Dashboard</a></div>
-        <div class="breadcrumb-item"><a href="<?=base_url('siswa');?>">Siswa</a></div>
+        <div class="breadcrumb-item"><a href="<?=base_url('siswa');?>">Data Siswa</a></div>
         <div class="breadcrumb-item">List</div>
       </div>
     </div>
@@ -70,9 +70,11 @@ $this->load->view('pages/_partials/header');
                           href="javascript:void(0);" class="item_edit_siswa badge badge-success"><i
                             class="fas fa-edit"></i>
                           Edit</a>
+                        <?php if ($user['role_id'] == 1): ?>
                         <a data-id-siswa="<?=$sw['NIS'];?>" data-nama="<?=$sw['nama'];?>" href="javascript:void(0);"
                           class="item_delete_siswa badge badge-danger"><i class="fas fa-trash"></i>
                           Delete</a>
+                        <?php endif;?>
                       </td>
                     </tr>
                     <?php $i++;?>

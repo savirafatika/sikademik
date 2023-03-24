@@ -257,6 +257,7 @@ if ($this->uri->segment(2) == "" || $this->uri->segment(2) == "index") {?>
 <?php $this->load->view('pages/_partials/scripts/tahun');?>
 <?php $this->load->view('pages/_partials/scripts/jadwal');?>
 <?php $this->load->view('pages/_partials/scripts/nilai');?>
+<?php $this->load->view('pages/_partials/scripts/raport');?>
 </body>
 
 </html>

@@ -29,8 +29,8 @@ $this->load->view('pages/_partials/header');
                 <table class="table table-striped" id="table-kelas">
                   <thead>
                     <tr>
-                      <th class="align-middle text-center">No</th>
-                      <th class="align-middle text-center">Mata Pelajaran</th>
+                      <th class="align-middle">No</th>
+                      <th class="align-middle">Mata Pelajaran</th>
                       <th class="align-middle text-center">Pengetahuan (KI-3)</th>
                       <th class="align-middle text-center">Keterampilan (KI-4)</th>
                       <th class="align-middle text-center">Spiritual (KI-1)</th>
@@ -40,13 +40,13 @@ $this->load->view('pages/_partials/header');
                   <tbody id="show_data">
                     <?php $i = 1;?>
                     <?php foreach ($nilai as $value): ?>
-                    <tr class="text-center">
+                    <tr>
                       <td><?=$i;?></td>
                       <td><?=$value['nama_mapel'];?></td>
-                      <td><?=$value['nilai_pengetahuan'];?></td>
-                      <td><?=$value['nilai_keterampilan'];?></td>
-                      <td><?=$value['spiritual'] ?? '-';?></td>
-                      <td><?=$value['sosial'] ?? '-';?></td>
+                      <td class="text-center"><?=$value['nilai_pengetahuan'];?></td>
+                      <td class="text-center"><?=$value['nilai_keterampilan'];?></td>
+                      <td class="text-center"><?=$value['spiritual'] ?? '-';?></td>
+                      <td class="text-center"><?=$value['sosial'] ?? '-';?></td>
                     </tr>
                     <?php $i++;?>
                     <?php endforeach;?>

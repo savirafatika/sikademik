@@ -29,22 +29,22 @@ $this->load->view('pages/_partials/header');
                 <table class="table table-striped" id="table-kelas">
                   <thead>
                     <tr>
-                      <th class="align-middle text-center">Waktu</th>
-                      <th class="align-middle text-center">Hari</th>
-                      <th class="align-middle text-center">Mata Pelajaran</th>
-                      <th class="align-middle text-center">Guru Pengampu</th>
+                      <th class="align-middle">Waktu</th>
+                      <th class="align-middle">Hari</th>
+                      <th class="align-middle">Mata Pelajaran</th>
+                      <th class="align-middle">Guru Pengampu</th>
                       <th class="align-middle text-center">Aksi</th>
                     </tr>
                   </thead>
                   <tbody id="show_data">
                     <?php $i = 1;?>
                     <?php foreach ($jadwal as $j): ?>
-                    <tr class="text-center">
+                    <tr>
                       <td><?=$j['jam'];?></td>
                       <td <?=$j['nama_hari'] == 'Kosong' ? 'class="text-danger"' : '';?>><?=$j['nama_hari'];?></td>
                       <td><?=$j['nama_mapel'];?></td>
                       <td><?=$j['nama_guru'];?></td>
-                      <td>
+                      <td class="text-center">
                         <a data-id-jadwal="<?=$j['id'];?>" data-tahun-id="<?=$j['tahun_id'];?>"
                           data-jam="<?=$j['jam'];?>" data-mapel-id="<?=$j['mapel_id'];?>"
                           data-guru-id="<?=$j['guru_id'];?>" data-hari-id="<?=$j['hari_id'];?>"

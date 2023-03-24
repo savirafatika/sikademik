@@ -6,11 +6,11 @@ $this->load->view('pages/_partials/header');
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Daftar Kelas</h1>
+      <h1>Daftar Siswa</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="<?=base_url('dashboard');?>">Dashboard</a></div>
-        <div class="breadcrumb-item"><a href="">Data Siswa</a></div>
-        <div class="breadcrumb-item">List</div>
+        <div class="breadcrumb-item"><a href="<?=base_url('raport');?>">Raport</a></div>
+        <div class="breadcrumb-item">Daftar Siswa</div>
       </div>
     </div>
 
@@ -19,31 +19,30 @@ $this->load->view('pages/_partials/header');
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4>Daftar Kelas</h4>
+              <h4>Daftar Siswa</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped" id="table-siswa-kelas">
+                <table class="table table-striped" id="table-jadwal-siswa">
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Nama Kelas</th>
-                      <th>Jumlah Siswa</th>
+                      <th>NIS</th>
+                      <th>Nama Siswa</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>
                   <tbody id="show_data">
                     <?php $i = 1;?>
-                    <?php foreach ($daftar_kelas as $dk): ?>
+                    <?php foreach ($daftar_siswa as $dk): ?>
                     <tr>
                       <td><?=$i;?></td>
-                      <td><?=$dk['nama_kelas'];?></td>
-                      <td><?=count_siswa_kelas($dk['id']);?></td>
+                      <td><?=$dk['NIS'];?></td>
+                      <td><?=$dk['nama'];?></td>
                       <td>
-                        <a data-id-kelas="<?=$dk['id'];?>" data-nama-kelas="<?=$dk['nama_kelas'];?>"
-                          href="javascript:void(0);" class="item_lihat_siswa badge badge-info"><i
-                            class="fas fa-eye"></i>
-                          Lihat Siswa</a>
+                        <a data-nis-siswa="<?=$dk['NIS'];?>" href="javascript:void(0);"
+                          class="item_lihat_raport_siswa badge badge-info"><i class="fas fa-eye"></i>
+                          Lihat Nilai</a>
                       </td>
                     </tr>
                     <?php $i++;?>

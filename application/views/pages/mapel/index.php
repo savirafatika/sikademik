@@ -24,7 +24,9 @@ $this->load->view('pages/_partials/header');
                 Kembali</a>
             </div>
             <div class="card-body">
+              <?php if ($user['role_id'] == 1): ?>
               <a href="javascript:void(0);" class="btn btn-primary mb-3" id="newMapelModal">Tambah Mata Pelajaran</a>
+              <?php endif;?>
               <div class="table-responsive">
                 <table class="table table-striped" id="table-mapel">
                   <thead>
@@ -33,7 +35,9 @@ $this->load->view('pages/_partials/header');
                       <th>Kelas</th>
                       <th>Nama</th>
                       <th>Grup</th>
+                      <?php if ($user['role_id'] == 1): ?>
                       <th>Aksi</th>
+                      <?php endif;?>
                     </tr>
                   </thead>
                   <tbody id="show_data">
@@ -43,7 +47,8 @@ $this->load->view('pages/_partials/header');
                       <td><?=$i;?></td>
                       <td><?=$m['nama_kelas'];?></td>
                       <td><?=$m['nama_mapel'];?></td>
-                      <td>Kelompok <?=$m['grup'];?> <?= $m['grup'] === 'A' ? '(Wajib)' : '(Mulok)'; ?></td>
+                      <td>Kelompok <?=$m['grup'];?> <?=$m['grup'] === 'A' ? '(Wajib)' : '(Mulok)';?></td>
+                      <?php if ($user['role_id'] == 1): ?>
                       <td>
                         <a data-id-mapel="<?=$m['id'];?>" data-nama-mapel="<?=$m['nama_mapel'];?>"
                           data-kelas-id="<?=$m['kelas_id'];?>" data-nama-kelas="<?=$m['nama_kelas'];?>"
@@ -55,6 +60,7 @@ $this->load->view('pages/_partials/header');
                             class="fas fa-trash"></i>
                           Delete</a>
                       </td>
+                      <?php endif;?>
                     </tr>
                     <?php $i++;?>
                     <?php endforeach;?>

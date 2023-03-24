@@ -6,10 +6,10 @@ $this->load->view('pages/_partials/header');
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Data Nilai Siswa</h1>
+      <h1>Raport Siswa</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active"><a href="<?=base_url('dashboard');?>">Dashboard</a></div>
-        <div class="breadcrumb-item"><a href="">Nilai</a></div>
+        <div class="breadcrumb-item"><a href="">Raport</a></div>
         <div class="breadcrumb-item">List</div>
       </div>
     </div>
@@ -19,7 +19,7 @@ $this->load->view('pages/_partials/header');
         <div class="col-12">
           <div class="card">
             <div class="card-header">
-              <h4>Pencarian Nilai</h4>
+              <h4>Pencarian Data</h4>
             </div>
             <div class="card-body">
               <form action="" method="">
@@ -58,7 +58,7 @@ $this->load->view('pages/_partials/header');
                     <?=form_error('semester');?>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-shadow" id="btnCariNilai">Lihat Data</button>
+                <button type="submit" class="btn btn-primary btn-shadow" id="btnCariRaport">Lihat Data</button>
               </form>
             </div>
           </div>

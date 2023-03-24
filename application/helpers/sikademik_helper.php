@@ -32,7 +32,10 @@ function is_logged_in()
                 'menu_id' => 2,
             ])->row_array();
         } else {
-            $menu = $ci->db->get_where('user_sub_menu', ['url' => $path])->row_array();
+            $ci->db->select('menu_id');
+            $ci->db->where('url', $path);
+            $ci->db->where_in('menu_id', [1, 3]);
+            $menu = $ci->db->get('user_sub_menu')->row_array();
         }
         $userAccess = $ci->db->get_where('user_access_menu', [
             'role_id' => $role_id,
@@ -84,4 +87,30 @@ function count_siswa_kelas($id_kelas)
     $ci = get_instance();
     $ci->load->model('Jadwal_guru_model', 'siswa');
     return $ci->siswa->countSiswaKelas($id_kelas)->num_rows();
+}
+
+function conversi_nilai($angka)
+{
+    $nilai = '';
+    if ($angka >= 81) {
+        $nilai = 'A';
+    } elseif ($angka > 60 && $angka <= 80) {
+        $nilai = 'B';
+    } elseif ($angka > 40 && $angka <= 60) {
+        $nilai = 'C';
+    } elseif ($angka > 20 && $angka <= 40) {
+        $nilai = 'D';
+    } else {
+        $nilai = 'E';
+    }
+    return $nilai;
+}
+
+function get_ranking($idKelas, $nis)
+{
+    $ci = get_instance();
+    $ci->load->model('Raport_model', 'raport');
+    $query   = $ci->raport->getRankingSiswa($idKelas)->result_array();
+    $ranking = array_column($query, 'nis');
+    return array_search($nis, $ranking) + 1;
 }

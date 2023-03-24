@@ -12,10 +12,14 @@ class Jadwal_guru extends CI_Controller
 
     public function index()
     {
-        $data['title']       = 'Jadwal Guru';
-        $email               = $this->session->userdata('email');
-        $data['user']        = $this->db->get_where('user', ['email' => $email])->row_array();
-        $data['daftar_guru'] = $this->jadwal_guru->getGuru()->result_array();
+        $data['title'] = 'Jadwal Guru';
+        $email         = $this->session->userdata('email');
+        $data['user']  = $this->db->get_where('user', ['email' => $email])->row_array();
+        $nip           = null;
+        if ($data['user']['role_id'] != 1) {
+            $nip = $data['user']['no_induk'] ?? null;
+        }
+        $data['daftar_guru'] = $this->jadwal_guru->getGuru($nip);
         $this->load->view('pages/jadwal/guru/list-guru', $data);
     }
 

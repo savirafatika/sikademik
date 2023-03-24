@@ -17,9 +17,12 @@ class Jadwal_guru_model extends CI_Model
         return $this->db->query($query);
     }
 
-    public function getGuru()
+    public function getGuru($nip = null)
     {
-        return $this->db->get('guru');
+        if (IS_NULL($nip)) {
+            return $this->db->get('guru')->result_array();
+        }
+        return $this->db->get_where('guru', ['NIP' => $nip])->result_array();
     }
 
     public function getKelasByID($idKelas)
