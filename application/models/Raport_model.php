@@ -37,6 +37,22 @@ class Raport_model extends CI_Model
         return $this->db->query($query);
     }
 
+    public function getSiswaByNIS($NIS = null)
+    {
+        $query = "SELECT
+          s.NIS,
+          s.nama,
+          ns.semester,
+          k.nama_kelas
+          FROM
+          siswa s
+          LEFT JOIN kelas_murid km ON km.nis = s.NIS
+          LEFT JOIN kelas k ON k.id = km.kelas_id
+          LEFT JOIN nilai_siswa ns ON ns.siswa_id = s.NIS
+          WHERE ns.siswa_id ='" . $NIS . "'";
+        return $this->db->query($query);
+    }
+
     public function getDaftarSiswa($param)
     {
         $query = "SELECT

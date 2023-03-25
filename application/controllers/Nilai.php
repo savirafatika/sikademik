@@ -53,6 +53,10 @@ class Nilai extends CI_Controller
             "siswa"    => $idSiswa,
         ];
         $data['back']  = base_url('nilai/daftar_siswa') . "?kelas=${kelas}&tahun=${tahun}&semester=${semester}";
+        $data['kelas'] = $this->nilai->getAllKelas()->result_array();
+        $data['tahun'] = $this->nilai->getTahun()->result_array();
+        $data['mapel'] = $this->nilai->getAllMapel($kelas)->result_array();
+        $data['siswa'] = $this->nilai->getSiswa($kelas)->result_array();
         $data['nilai'] = $this->nilai->getNilaiSiswa($param)->result_array();
         $this->load->view('pages/nilai/data-nilai', $data);
 
@@ -127,6 +131,96 @@ class Nilai extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="success">Nilai berhasil diinput!</div>');
             redirect('nilai/input');
         }
+    }
+
+    public function update()
+    {
+
+        $this->form_validation->set_rules('spiritual', 'Nilai Sikap Spiritual', 'required');
+        $this->form_validation->set_rules('sosial', 'Nilai Sikap Sosial', 'required');
+        $this->form_validation->set_rules('nilai_pengetahuan', 'Nilai Pengetahuan', 'required');
+        $this->form_validation->set_rules('nilai_keterampilan', 'Nilai Keterampilan', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $errors = array_values($this->form_validation->error_array())[0];
+            echo json_encode(['error' => $errors]);
+        } else {
+            $nilai_id = $this->input->post('id_nilai');
+
+            $this->db->set('sosial', $this->input->post('sosial'));
+            $this->db->set('spiritual', $this->input->post('spiritual'));
+            $this->db->set('nilai_keterampilan', $this->input->post('nilai_keterampilan'));
+            $this->db->set('nilai_pengetahuan', $this->input->post('nilai_pengetahuan'));
+            $this->db->where('id', $nilai_id);
+            $this->db->update('nilai_siswa');
+
+            $nilai = $this->nilai->getNilaiById($nilai_id)->row_array();
+            $param = [
+                "kelas"    => $nilai['kelas_id'],
+                "tahun"    => $nilai['tahun_id'],
+                'semester' => $nilai['semester'],
+                'siswa'    => $nilai['siswa_id'],
+            ];
+
+            // trigger update nilai untuk ranking siswa
+            $jumlah_nilai_pengetahuan  = 0;
+            $jumlah_nilai_keterampilan = 0;
+
+            $nilai_siswa = $this->nilai->getNilai($param)->result_array();
+
+            foreach ($nilai_siswa as $item) {
+                $jumlah_nilai_pengetahuan += $item['nilai_pengetahuan'];
+                $jumlah_nilai_keterampilan += $item['nilai_keterampilan'];
+            }
+            $jumlah_nilai = $jumlah_nilai_pengetahuan + $jumlah_nilai_keterampilan;
+
+            $data_trigger = [
+                "kelas"        => $param['kelas'],
+                'nis'          => $param['siswa'],
+                'jumlah_nilai' => $jumlah_nilai,
+            ];
+
+            $this->nilai->trigger_ranking($data_trigger);
+
+            echo json_encode(['success' => 'Data nilai berhasil diubah']);
+        }
+    }
+
+    public function delete()
+    {
+        $nilai_id = $this->input->post('id');
+        $nilai    = $this->nilai->getNilaiById($nilai_id)->row_array();
+        $param    = [
+            "kelas"    => $nilai['kelas_id'],
+            "tahun"    => $nilai['tahun_id'],
+            'semester' => $nilai['semester'],
+            'siswa'    => $nilai['siswa_id'],
+        ];
+
+        $this->db->where('id', $nilai_id);
+        $this->db->delete('nilai_siswa');
+
+        // trigger update nilai untuk ranking siswa
+        $jumlah_nilai_pengetahuan  = 0;
+        $jumlah_nilai_keterampilan = 0;
+
+        $nilai_siswa = $this->nilai->getNilai($param)->result_array();
+
+        foreach ($nilai_siswa as $item) {
+            $jumlah_nilai_pengetahuan += $item['nilai_pengetahuan'];
+            $jumlah_nilai_keterampilan += $item['nilai_keterampilan'];
+        }
+        $jumlah_nilai = $jumlah_nilai_pengetahuan + $jumlah_nilai_keterampilan;
+
+        $data_trigger = [
+            "kelas"        => $param['kelas'],
+            'nis'          => $param['siswa'],
+            'jumlah_nilai' => $jumlah_nilai,
+        ];
+
+        $this->nilai->trigger_ranking($data_trigger);
+
+        echo json_encode(['success' => 'Data nilai berhasil dihapus']);
     }
 
     public function get_mapel()

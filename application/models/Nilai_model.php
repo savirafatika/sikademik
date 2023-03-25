@@ -54,14 +54,10 @@ class Nilai_model extends CI_Model
     public function getNilaiSiswa($param)
     {
         $query = "SELECT
-        ns.id,
+        ns.*,
         s.nama,
         mp.nama_mapel,
-        mp.grup,
-        ns.nilai_pengetahuan,
-        ns.nilai_keterampilan,
-        ns.spiritual,
-        ns.sosial
+        mp.grup
       FROM
         nilai_siswa ns
         LEFT JOIN siswa s ON s.NIS = ns.siswa_id
@@ -94,6 +90,12 @@ class Nilai_model extends CI_Model
       WHERE
         siswa_id ='" . $param['siswa'] . "' AND
         kelas_id ='" . $param['kelas'] . "' AND tahun_id ='" . $param['tahun'] . "' AND semester ='" . $param['semester'] . "'";
+        return $this->db->query($query);
+    }
+
+    public function getNilaiById($nilai_id)
+    {
+        $query = "SELECT * FROM nilai_siswa WHERE id ='" . $nilai_id . "'";
         return $this->db->query($query);
     }
 

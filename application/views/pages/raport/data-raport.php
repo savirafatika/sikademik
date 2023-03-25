@@ -18,6 +18,18 @@ $this->load->view('pages/_partials/header');
       <div class="row">
         <div class="col-12">
           <div class="card">
+            <div class="card-body">
+              <p><b>Nama Siswa: <?=$siswa['nama'];?></b></p>
+              <p><b>NIS: <?=$siswa['NIS'];?></b></p>
+              <p><b>Kelas: <?=$siswa['nama_kelas'];?></b></p>
+              <p><b>Semester: <?=$siswa['semester'];?></b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
             <div class="card-header">
               <h4>Capaian Kompetensi</h4>
               <a href="<?=$back;?>" class="btn btn-round btn-secondary"><i class="fas fa-arrow-left"></i>

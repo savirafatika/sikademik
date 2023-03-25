@@ -90,17 +90,6 @@ $(document).ready(function() {
     return false;
   });
 
-  // btn add modal
-  $("#newJadwalModal").click(function(e) {
-    e.preventDefault()
-    $('[name="tahun_id"]').val("");
-    $('[name="mapel_id"]').val("");
-    $('[name="guru_id"]').val("");
-    $('[name="hari_id"]').val("");
-    $('[name="jam"]').val("");
-    $('#nilaiModal').modal('show');
-  });
-
   // btn edit modal
   $('#show_data').on('click', '.item_edit_nilai', function(e) {
     e.preventDefault()
@@ -115,16 +104,31 @@ $(document).ready(function() {
     $("#mapel_id option:selected").prop("selected", false);
     $(`#mapel_id option[value='${mapel_id}']`).prop('selected', true);
 
-    var guru_id = $(this).data('guru-id');
-    $("#guru_id option:selected").prop("selected", false);
-    $(`#guru_id option[value='${guru_id}']`).prop('selected', true);
+    var kelas_id = $(this).data('mapel-id');
+    $("#kelas_id option:selected").prop("selected", false);
+    $(`#kelas_id option[value='${kelas_id}']`).prop('selected', true);
 
-    var hari_id = $(this).data('hari-id');
-    $("#hari_id option:selected").prop("selected", false);
-    $(`#hari_id option[value='${hari_id}']`).prop('selected', true);
+    var siswa_id = $(this).data('siswa-id');
+    $("#siswa_id option:selected").prop("selected", false);
+    $(`#siswa_id option[value='${siswa_id}']`).prop('selected', true);
 
-    var jam = $(this).data('jam');
-    $('[name="jam"]').val(jam);
+    var semester = $(this).data('semester');
+    $("#semester option:selected").prop("selected", false);
+    $(`#semester option[value='${semester}']`).prop('selected', true);
+
+    var nilai_pengetahuan = $(this).data('nilai_pengetahuan');
+    $('[name="nilai_pengetahuan"]').val(nilai_pengetahuan);
+
+    var nilai_keterampilan = $(this).data('nilai_keterampilan');
+    $('[name="nilai_keterampilan"]').val(nilai_keterampilan);
+
+    var spiritual = $(this).data('spiritual');
+    $("#spiritual option:selected").prop("selected", false);
+    $(`#spiritual option[value='${spiritual}']`).prop('selected', true);
+
+    var sosial = $(this).data('sosial');
+    $("#sosial option:selected").prop("selected", false);
+    $(`#sosial option[value='${sosial}']`).prop('selected', true);
 
     $('#nilaiModal').modal('show');
   })
@@ -134,21 +138,19 @@ $(document).ready(function() {
     var id = $(this).data('id-nilai');
 
     $('[name="id_nilai_delete"]').val(id);
-    $('#modalHapusJadwal').modal('show');
+    $('#modalHapusNilai').modal('show');
   });
 
   //btn simpan nilai
-  $('#btnSimpanJadwal').on('click', function(e) {
+  $('#btnSimpanNilai').on('click', function(e) {
     e.preventDefault();
-    var id = "<?=$this->uri->segment(3);?>"
     var isEdit = $('input[name="id_nilai"]').val();
-    var tahun_id = $('#tahun_id').find(":selected").val();
-    var mapel_id = $('#mapel_id').find(":selected").val();
-    var guru_id = $('#guru_id').find(":selected").val();
-    var hari_id = $('#hari_id').find(":selected").val();
-    var jam = $('input[name="jam"]').val();
+    var spiritual = $('#spiritual').find(":selected").val();
+    var sosial = $('#sosial').find(":selected").val();
+    var nilai_pengetahuan = $('input[name="nilai_pengetahuan"]').val();
+    var nilai_keterampilan = $('input[name="nilai_keterampilan"]').val();
 
-    var action = "<?=base_url('nilai/store/');?>"
+    var action = "<?=base_url('nilai/input/');?>"
     var message = 'ditambahkan!';
     if (isEdit) {
       action = '<?=base_url('nilai/update');?>';
@@ -160,22 +162,19 @@ $(document).ready(function() {
       url: action,
       dataType: "JSON",
       data: {
-        kelas_id: id,
         id_nilai: isEdit,
-        jam: jam,
-        tahun_id: tahun_id,
-        mapel_id: mapel_id,
-        guru_id: guru_id,
-        hari_id: hari_id
+        nilai_pengetahuan: nilai_pengetahuan,
+        nilai_keterampilan: nilai_keterampilan,
+        spiritual: spiritual,
+        sosial: sosial
       },
       success: function(data) {
-        $('[name="jam"]').val("");
-        $('#tahun_id').prop('selectedIndex', 0);
-        $('#mapel_id').prop('selectedIndex', 0);
-        $('#guru_id').prop('selectedIndex', 0);
-        $('#hari_id').prop('selectedIndex', 0);
-        $('#modalGuru').modal('hide');
-        swal('Berhasil', `Jadwal berhasil ${message}`, 'success');
+        $('#spiritual').prop('selectedIndex', 0);
+        $('#sosial').prop('selectedIndex', 0);
+        $('[name="nilai_pengetahuan"]').val("");
+        $('[name="nilai_keterampilan"]').val("");
+        $('#nilaiModal').modal('hide');
+        swal('Berhasil', `Nilai berhasil ${message}`, 'success');
         window.location.reload()
       }
     });
@@ -194,8 +193,8 @@ $(document).ready(function() {
       },
       success: function(data) {
         $('[name="id_nilai_delete"]').val("");
-        $('#modalHapusJadwal').modal('hide');
-        swal('Berhasil', 'Jadwal berhasil dihapus!', 'success');
+        $('#modalHapusNilai').modal('hide');
+        swal('Berhasil', 'Nilai berhasil dihapus!', 'success');
         window.location.reload()
       }
     });

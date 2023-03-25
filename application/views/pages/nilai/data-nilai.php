@@ -35,6 +35,7 @@ $this->load->view('pages/_partials/header');
                       <th class="align-middle text-center">Keterampilan (KI-4)</th>
                       <th class="align-middle text-center">Spiritual (KI-1)</th>
                       <th class="align-middle text-center">Sosial (KI-2)</th>
+                      <th class="align-middle text-center">Aksi</th>
                     </tr>
                   </thead>
                   <tbody id="show_data">
@@ -47,6 +48,20 @@ $this->load->view('pages/_partials/header');
                       <td class="text-center"><?=$value['nilai_keterampilan'];?></td>
                       <td class="text-center"><?=$value['spiritual'] ?? '-';?></td>
                       <td class="text-center"><?=$value['sosial'] ?? '-';?></td>
+                      <td class="text-center">
+                        <a data-id-nilai="<?=$value['id'];?>" data-tahun-id="<?=$value['tahun_id'];?>"
+                          data-mapel-id="<?=$value['mapel_id'];?>" data-siswa-id="<?=$value['siswa_id'];?>"
+                          data-spiritual="<?=$value['spiritual'];?>" data-sosial="<?=$value['sosial'];?>"
+                          data-nilai_pengetahuan="<?=$value['nilai_pengetahuan'];?>"
+                          data-nilai_keterampilan="<?=$value['nilai_keterampilan'];?>" href=" javascript:void(0);"
+                          class="item_edit_nilai badge badge-success"><i class="fas fa-edit"></i>
+                          Edit</a>
+                        <?php if ($user['role_id'] == 1): ?>
+                        <a data-id-nilai="<?=$value['id'];?>" href="javascript:void(0);"
+                          class="item_delete_nilai badge badge-danger"><i class="fas fa-trash"></i>
+                          Delete</a>
+                        <?php endif;?>
+                      </td>
                     </tr>
                     <?php $i++;?>
                     <?php endforeach;?>
@@ -60,4 +75,5 @@ $this->load->view('pages/_partials/header');
     </div>
   </section>
 </div>
+<?php $this->load->view('pages/_partials/modals/nilai');?>
 <?php $this->load->view('pages/_partials/footer');?>

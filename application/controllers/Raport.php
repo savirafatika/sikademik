@@ -59,6 +59,7 @@ class Raport extends CI_Controller
         $data['jumlah_siswa'] = $this->raport->getRankingSiswa($kelas)->num_rows();
         $data['grup_a']       = $this->raport->getRaportSiswa($param, 'A')->result_array();
         $data['grup_b']       = $this->raport->getRaportSiswa($param, 'B')->result_array();
+        $data['siswa']        = $this->raport->getSiswaByNIS($idSiswa)->row_array();
         $this->load->view('pages/raport/data-raport', $data);
 
     }
