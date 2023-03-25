@@ -19,10 +19,24 @@ $this->load->view('pages/_partials/header');
         <div class="col-12">
           <div class="card">
             <div class="card-body">
-              <p><b>Nama Siswa: <?=$siswa['nama'];?></b></p>
-              <p><b>NIS: <?=$siswa['NIS'];?></b></p>
-              <p><b>Kelas: <?=$siswa['nama_kelas'];?></b></p>
-              <p><b>Semester: <?=$siswa['semester'];?></b></p>
+              <table border="0" class="table table-responsive table-md">
+                <tr>
+                  <td>Nama Siswa</td>
+                  <td>: <?=$siswa['nama'];?></td>
+                </tr>
+                <tr>
+                  <td>NIS</td>
+                  <td>: <?=$siswa['NIS'];?></td>
+                </tr>
+                <tr>
+                  <td>Kelas</td>
+                  <td>: <?=$siswa['nama_kelas'];?></td>
+                </tr>
+                <tr>
+                  <td>Semester</td>
+                  <td>: <?=$siswa['semester'];?></td>
+                </tr>
+              </table>
             </div>
           </div>
         </div>
