@@ -11,7 +11,7 @@ class Role extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Role';
+        $data['title'] = 'Level Pengguna';
         $data['user']  = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
 
         $data['role'] = $this->db->get('user_role')->result_array();
