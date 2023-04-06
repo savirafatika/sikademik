@@ -176,11 +176,13 @@ $(document).ready(function() {
     $('[name="golongan"]').val("");
     $('[name="keterangan"]').val("");
     $('textarea#alamat').val("");
+    $(".modal-title").html('Tambah Guru')
     $('#modalGuru').modal('show');
   })
   // btn edit modal
   $('#show_data').on('click', '.item_edit_guru', function(e) {
     e.preventDefault()
+    $(".modal-title").html('Edit Guru')
     var id = $(this).data('id-guru');
     $('#isEdit').prepend(`<input type="hidden" name="id_guru" value="${id}" />`);
     var nip = id;

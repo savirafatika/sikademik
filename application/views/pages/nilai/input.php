@@ -123,7 +123,7 @@ $this->load->view('pages/_partials/header');
                   </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-shadow" id="btnSimpanNilai">Simpan</button>
+                <button type="submit" class="btn btn-primary btn-shadow" id="">Simpan</button>
               </form>
             </div>
           </div>

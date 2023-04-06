@@ -104,7 +104,7 @@ class Auth extends CI_Controller
 
             // $this->_sendEmail($token, 'verify');
 
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Selamat! Akun berhasil dibuat. Silakan aktivasi akun Anda!</div>');
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Selamat! Akun berhasil dibuat. Silakan login menggunakan akun Anda!</div>');
             redirect('auth');
         }
     }
@@ -185,8 +185,10 @@ class Auth extends CI_Controller
 
     public function logout()
     {
+        $this->session->unset_userdata('name');
         $this->session->unset_userdata('email');
         $this->session->unset_userdata('role_id');
+        $this->session->unset_userdata('role');
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Anda berhasil logout!</div>');
         redirect('auth');

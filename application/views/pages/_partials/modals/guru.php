@@ -1,4 +1,4 @@
-<!-- modal sub menu -->
+<!-- modal tambah & edit -->
 <div class="modal fade" tabindex="-1" role="dialog" id="modalGuru">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
