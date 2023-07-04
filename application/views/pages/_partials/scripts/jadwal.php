@@ -111,14 +111,18 @@ $(document).ready(function() {
         hari_id: hari_id
       },
       success: function(data) {
-        $('[name="jam"]').val("");
-        $('#tahun_id').prop('selectedIndex', 0);
-        $('#mapel_id').prop('selectedIndex', 0);
-        $('#guru_id').prop('selectedIndex', 0);
-        $('#hari_id').prop('selectedIndex', 0);
-        $('#modalGuru').modal('hide');
-        swal('Berhasil', `Jadwal berhasil ${message}`, 'success');
-        window.location.reload()
+        if ($.isEmptyObject(data.error)) {
+          $('[name="jam"]').val("");
+          $('#tahun_id').prop('selectedIndex', 0);
+          $('#mapel_id').prop('selectedIndex', 0);
+          $('#guru_id').prop('selectedIndex', 0);
+          $('#hari_id').prop('selectedIndex', 0);
+          $('#modalGuru').modal('hide');
+          swal('Berhasil', `Jadwal berhasil ${message}`, 'success');
+          window.location.reload()
+        } else {
+          alert(data.error);
+        }
       }
     });
     return false;

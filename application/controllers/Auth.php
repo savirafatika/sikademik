@@ -113,11 +113,12 @@ class Auth extends CI_Controller
     private function _sendEmail($token, $type)
     {
         $config = [
-            'protocol'  => 'smtp',
-            'smtp_host' => 'ssl://smtp.googlemail.com',
-            'smtp_user' => 'sikademik@mail.com',
-            'smtp_pass' => '1234567890',
-            'smtp_port' => 465,
+            'protocol' => 'smtp',
+            'smtp_host' => 'sandbox.smtp.mailtrap.io',
+            'smtp_port' => 2525,
+            'smtp_user' => '1b3fa5b2998eed',
+            'smtp_pass' => 'acc194d8d079a9',
+            'crlf' => "\r\n",          
             'mailtype'  => 'html',
             'charset'   => 'utf-8',
             'newline'   => "\r\n"
@@ -125,7 +126,7 @@ class Auth extends CI_Controller
 
         $this->email->initialize($config);
 
-        $this->email->from('sikademik@mail.com', 'Sikademik');
+        $this->email->from('mail@sdn2sugihwaras.online', 'Sikademik');
         $this->email->to($this->input->post('email'));
 
         if ($type == 'verify') {
@@ -222,7 +223,7 @@ class Auth extends CI_Controller
                 ];
 
                 $this->db->insert('user_token', $user_token);
-                // $this->_sendEmail($token, 'forgot');
+                $this->_sendEmail($token, 'forgot');
 
                 $this->session->set_flashdata('message', '<div class="alert alert-success m-4" role="alert">Silakan cek email Anda untuk atur ulang password!</div>');
                 redirect('auth');
