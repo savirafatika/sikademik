@@ -115,7 +115,7 @@ class Auth extends CI_Controller
         $config = [
             'protocol' => 'smtp',
             'smtp_host' => 'sandbox.smtp.mailtrap.io',
-            'smtp_port' => 2525,
+            'smtp_port' => 587,
             'smtp_user' => '1b3fa5b2998eed',
             'smtp_pass' => 'acc194d8d079a9',
             'crlf' => "\r\n",          
